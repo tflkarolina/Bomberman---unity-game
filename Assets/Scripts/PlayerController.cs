@@ -11,11 +11,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float yMoveSpeed;
     [SerializeField] float zMoveSpeed;
 
+    Rigidbody myRigidBody;
+
+    [SerializeField] GameObject bombPrefab;
+
     // Start is called before the first frame update
     void Start()
     {
-        Vector3 newPlayerPosition = new Vector3(0, 0, 0);
-        transform.position += newPlayerPosition;
+        //Vector3 newPlayerPosition = new Vector3(0, 0, 0);
+        //transform.position += newPlayerPosition;
+
+        myRigidBody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -24,34 +30,48 @@ public class PlayerController : MonoBehaviour
         //transform.Translate(xMoveSpeed * Time.deltaTime, yMoveSpeed * Time.deltaTime, zMoveSpeed * Time.deltaTime);
 
         Movement();
+        PlaceBomb();
     }
 
     private void Movement()
     {
-        Vector3 newPosition = new Vector3();
+        Vector3 newVelocity = new Vector3();
         
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
-            newPosition = new Vector3(0f, 0f, zMoveSpeed);
+            newVelocity = new Vector3(0f, 0f, zMoveSpeed);
         }
         else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
-            newPosition = new Vector3(0f, 0f, -zMoveSpeed);
+            newVelocity = new Vector3(0f, 0f, -zMoveSpeed);
         }
         else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
-            newPosition = new Vector3(xMoveSpeed, 0f, 0f);
+            newVelocity = new Vector3(xMoveSpeed, 0f, 0f);
         }
         else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            newPosition = new Vector3(-xMoveSpeed, 0f, 0f);
+            newVelocity = new Vector3(-xMoveSpeed, 0f, 0f);
             //transform.Translate(-xMoveSpeed * Time.deltaTime, 0f, 0f);
         }
 
-        GetComponent<Rigidbody>().velocity = newPosition;
+
+        myRigidBody.velocity = newVelocity;
+        //GetComponent<Rigidbody>().velocity = newPosition;
 
 
         //transform.position += newPosition * Time.deltaTime;
+    }
+
+    private void PlaceBomb()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //UnityEngine.Debug.Log("Bomb placed!");
+            GameObject bomb = Instantiate(bombPrefab, transform.position, Quaternion.identity);
+            
+        }
+                                
     }
 
 }
