@@ -13,7 +13,7 @@ public class EnemyController : MonoBehaviour
 
     //to make the enemy stop when it hits the bomb
     private bool isMoving = true;
-
+    private int waypointDestination = 0;
 
 
     private void Start()
@@ -30,7 +30,18 @@ public class EnemyController : MonoBehaviour
 
         if (isMoving)
         {
-            myRigidBody.MovePosition(Vector3.MoveTowards(transform.position, target[0].position, Time.deltaTime * moveSpeed)); //less isues
+            myRigidBody.MovePosition(Vector3.MoveTowards(transform.position, target[waypointDestination].position, Time.deltaTime * moveSpeed)); //less isues
+            if (Vector3.Distance(transform.position, target[waypointDestination].position) < 0.1f)
+            {
+                if (waypointDestination >= target.Length - 1)
+                {
+                    waypointDestination = 0;
+                }
+                else
+                {
+                    waypointDestination++;
+                }
+            }
         }
    
     }
