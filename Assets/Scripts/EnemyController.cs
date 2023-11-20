@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour
 
     //to make the enemy stop when it hits the bomb
     private bool isMoving = true;
+    private bool movinForward = true;
     private int waypointDestination = 0;
 
 
@@ -33,14 +34,32 @@ public class EnemyController : MonoBehaviour
             myRigidBody.MovePosition(Vector3.MoveTowards(transform.position, target[waypointDestination].position, Time.deltaTime * moveSpeed)); //less isues
             if (Vector3.Distance(transform.position, target[waypointDestination].position) < 0.1f)
             {
-                if (waypointDestination >= target.Length - 1)
+                if (movinForward)
                 {
-                    waypointDestination = 0;
+                    if (waypointDestination >= target.Length - 1)
+                    {
+                        movinForward = false;
+                        waypointDestination--;
+                    }
+                    else //if enemy is moving forward and has not reached the last waypoint in the array
+                    {
+                        waypointDestination++;
+                    }
                 }
+                //enemy is moving backwords
                 else
                 {
-                    waypointDestination++;
+                    if (waypointDestination <= 0)
+                    {
+                        movinForward = true;
+                        waypointDestination++;
+                    }
+                    else //if the enemy is moving backwords has not reached the first waypoint in the array
+                    {
+                        waypointDestination--;
+                    }
                 }
+
             }
         }
    
