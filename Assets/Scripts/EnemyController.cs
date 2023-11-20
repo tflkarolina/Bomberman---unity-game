@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private Transform target;
+    [SerializeField] private Transform[] target;
+
+
     [SerializeField] private float moveSpeed = 1f;
 
     Rigidbody myRigidBody;
@@ -28,7 +30,7 @@ public class EnemyController : MonoBehaviour
 
         if (isMoving)
         {
-            myRigidBody.MovePosition(Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed)); //less isues
+            myRigidBody.MovePosition(Vector3.MoveTowards(transform.position, target[0].position, Time.deltaTime * moveSpeed)); //less isues
         }
    
     }
