@@ -19,10 +19,13 @@ public class Bomb : MonoBehaviour
         
     }
 
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    Debug.Log(other.gameObject.name);
-    //}
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            GetComponent<SphereCollider>().isTrigger = false;       //when we move off of the bomb - when we move back, we collide and cant get back on it
+        }
+    }
 
     //private void OnCollisionEnter(Collision collision)
     //{
