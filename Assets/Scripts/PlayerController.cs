@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] GameObject bombPrefab;
 
+    private GameManager myGameManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +24,8 @@ public class PlayerController : MonoBehaviour
         //transform.position += newPlayerPosition;
 
         myRigidBody = GetComponent<Rigidbody>();
+        myGameManager = FindObjectOfType<GameManager>();
+        // or :  myGameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
